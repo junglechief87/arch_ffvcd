@@ -53,8 +53,9 @@ class FFVCDSNIClient(SNIClient):
     local_set_events = {flag_name: False for flag_name in tracker_event_locations}
     world_byte = 0
     current_world: Dict[str, bool]
-    current_world = {flag_name: False for flag_name in world_flags} 
-    
+    current_world = {flag_name: False for flag_name in world_flags}
+    patch_suffix = ".apffvcd"
+
     async def deathlink_kill_player(self, ctx):
         pass
 
@@ -433,7 +434,3 @@ class FFVCDSNIClient(SNIClient):
 #            "20" : 5,
 #            "40" : 6,
 #            "80" : 7}
-
-                
-        
-                
