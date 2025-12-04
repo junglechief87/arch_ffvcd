@@ -9,6 +9,6 @@ jobs:
     steps:
       - uses: Eijebong/ap-actions/ap-tests@main
         with:
-          apworld-path: '.'
+          apworld-path: ffvcd
           ap-version: latest
           python-version: '3.13'
