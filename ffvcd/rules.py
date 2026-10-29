@@ -3,13 +3,8 @@ from worlds.generic.Rules import add_rule, set_rule, forbid_item
 def set_rules(ffvcdworld):
     multiworld = ffvcdworld.multiworld
     player = ffvcdworld.player
-    
-    if ffvcdworld.options.goal.value == 1:
-        multiworld.completion_condition[player] = \
-            lambda state: state.has("ExDeath World 2", player)
-			
-    elif ffvcdworld.options.goal.value == 2:
-        piano_events = (
+
+    piano_events = (
             "Piano (Tule)",
             "Piano (Carwen)",
             "Piano (Karnak)",
@@ -19,9 +14,24 @@ def set_rules(ffvcdworld):
             "Piano (Rugor)",
             "Piano (Mirage)",
         )
+
+    hero_song = multiworld.get_location(
+        "Crescent Island - Hero Song from Crescent Town (Hero)", player
+    )
+
+    # If Mirage piano cannot be reached, exclude Hero Song
+    if ffvcdworld.options.goal.value == 1:
+        add_rule(hero_song, lambda state: False)
+    else:
+        add_rule(hero_song, lambda state: all(state.has(piano, player) for piano in piano_events))
+    
+    if ffvcdworld.options.goal.value == 1:
+        multiworld.completion_condition[player] = \
+            lambda state: state.has("ExDeath World 2", player)
+			
+    elif ffvcdworld.options.goal.value == 2:
         multiworld.completion_condition[player] = \
             lambda state: all(state.has(piano, player) for piano in piano_events)
-			
     else:
         multiworld.completion_condition[player] = lambda state: state.has("Victory", player)
     
